@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from '@angular/forms'
+import {NgForm} from '@angular/forms';
+import { Department } from 'src/models/department.model';
+
 
 @Component({
   selector: 'app-create-employee',
@@ -7,7 +9,13 @@ import {NgForm} from '@angular/forms'
   styles: []
 })
 export class CreateEmployeeComponent implements OnInit {
-
+ isActive= false;
+ departments: Department[] = [
+  { id: 1, name: 'Help Desk' },
+  { id: 2, name: 'HR' },
+  { id: 3, name: 'IT' },
+  { id: 4, name: 'Payroll' }
+];
   constructor() { }
   ngOnInit() {
   }
