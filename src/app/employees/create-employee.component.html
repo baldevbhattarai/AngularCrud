@@ -14,10 +14,16 @@
         </span>
       </div>
       
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input id="email" type="text" class="form-control"
-        required  name="email" [(ngModel)]="employee.email">
+      <div class="form-group" [class.has-error]="email.invalid && email.touched">
+        <label for="email" class="control-label">Email</label>
+        <input id="email" required email type="text" class="form-control" name="email"
+                [(ngModel)]="employee.email" #email="ngModel">
+        <span class="help-block" *ngIf="email.errors?.required && email.touched">
+          Email is required
+        </span>
+        <span class="help-block" *ngIf="email.errors?.email && email.touched">
+          Email is Invalid
+        </span>
       </div>
       <div class="form-group">
         <label for="phoneNumber">Phone Number</label>
