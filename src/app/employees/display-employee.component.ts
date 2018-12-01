@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Employee } from 'src/models/employee.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-display-employee',
@@ -11,11 +12,10 @@ export class DisplayEmployeeComponent implements OnInit {
   notify: EventEmitter<Employee>= new EventEmitter<Employee>();
   @Input() employee: Employee;
 
-  constructor() { }
+  constructor(private _route: ActivatedRoute) { }
 
   ngOnInit() {
+    const id = +this._route.snapshot.paramMap.get('id');
   }
-  haldleClick():void{
-    this.notify.emit(this.employee);
-  }
+
 }
