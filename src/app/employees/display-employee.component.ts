@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Employee } from 'src/models/employee.model';
 
 @Component({
@@ -7,12 +7,15 @@ import { Employee } from 'src/models/employee.model';
   styleUrls: ['./display-employee.component.css']
 })
 export class DisplayEmployeeComponent implements OnInit {
-    // Parent component will use this Input property to pass
-  // the employee object to which the template binds to
+  @Output()
+  notify: EventEmitter<Employee>= new EventEmitter<Employee>();
   @Input() employee: Employee;
 
   constructor() { }
 
   ngOnInit() {
+  }
+  haldleClick():void{
+    this.notify.emit(this.employee);
   }
 }
