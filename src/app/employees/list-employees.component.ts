@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/models/employee.model';
 import { EmployeeService } from './employee.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-employees.component.css']
 })
 export class ListEmployeesComponent implements OnInit {
-
   employees: Employee[];
 
   constructor(private _employeeSerVice: EmployeeService, 
@@ -19,6 +18,7 @@ export class ListEmployeesComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.employees = this._employeeSerVice.getEmployees();
   }
 

@@ -8,13 +8,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./display-employee.component.css']
 })
 export class DisplayEmployeeComponent implements OnInit {
+
   @Output()
   notify: EventEmitter<Employee>= new EventEmitter<Employee>();
   @Input() employee: Employee;
+  private selectedEmployeeId:number;
+  constructor(private _route: ActivatedRoute) { 
 
-  constructor(private _route: ActivatedRoute) { }
+  }
 
   ngOnInit() {
+    this.selectedEmployeeId =+this._route.snapshot.paramMap.get('id');
     const id = +this._route.snapshot.paramMap.get('id');
   }
 
