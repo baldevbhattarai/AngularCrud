@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/models/employee.model';
-import { Router, ActivatedRoute } from '@angular/router';
-
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './list-employees.component.html',
@@ -10,27 +8,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ListEmployeesComponent implements OnInit {
   employees: Employee[];
-
-  // Use this property to stored filtered employees, so we do not
-  // lose the original list and do not have to make a round trip
-  // to the web server on every new search
   filteredEmployees: Employee[];
 
   private _searchTerm: string;
-
-  // We are binding to this property in the view template, so this
-  // getter is called when the binding needs to read the value
   get searchTerm(): string {
     return this._searchTerm;
   }
-
-  // This setter is called everytime the value in the search text box changes
   set searchTerm(value: string) {
     this._searchTerm = value;
-    this.filteredEmployees = this.filterEmployees(value);
+    this.filteredEmployees = this.filtereEmployees(value);
   }
-  constructor(private _router: Router,
-    private _route: ActivatedRoute) {
+
+  filtereEmployees(searchString: string) {
+    return this.employees.filter(employee =>
+      employee.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
+  }
+
+  constructor(private _route: ActivatedRoute) {
 
     this.employees = this._route.snapshot.data['employeeList'];
 
@@ -39,22 +33,9 @@ export class ListEmployeesComponent implements OnInit {
     } else {
       this.filteredEmployees = this.employees;
     }
-  }
 
+  }
 
   ngOnInit() {
-
-  }
-
-  onClick(employeeId: number): void {
-
-    this._router.navigate(['/employees', employeeId], {
-      queryParams: { 'searchTerm': this.searchTerm, 'testParam': 'testValue' }
-    });
-  }
-
-  filterEmployees(searchString: string) {
-    return this.employees.filter(employee =>
-      employee.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
   }
 }
