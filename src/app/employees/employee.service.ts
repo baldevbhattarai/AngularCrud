@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Employee } from 'src/models/employee.model';
 
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+
 // The @Injectable() decorator is used to inject other dependencies
 // into this service. As our service does not have any dependencies
 // at the moment, we may remove the @Injectable() decorator and the
@@ -44,8 +47,8 @@ export class EmployeeService {
         },
     ];
 
-    getEmployees(): Employee[] {
-        return this.listEmployees;
+    getEmployees():Observable<Employee[]> {
+        return of(this.listEmployees).pipe(delay(2000));
     }
     save(employee: Employee) {
         this.listEmployees.push(employee);

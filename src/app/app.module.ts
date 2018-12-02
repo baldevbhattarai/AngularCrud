@@ -14,9 +14,15 @@ import { ConfirmEqualValidatorDirective } from './shared/confirm-equal-validator
 import { EmployeeService } from './employees/employee.service';
 import { DisplayEmployeeComponent } from './employees/display-employee.component';
 import { EmployeeDetailsComponent } from './employees/employee-details.component';
+import { EmployeeListResolverService } from './employees/employee-list-resolver.service';
+
 
 const appRoutes: Routes = [
-  { path: 'list', component: ListEmployeesComponent },
+  {
+    path: 'list',
+    component: ListEmployeesComponent,
+    resolve: { employeeList: EmployeeListResolverService }
+  },
   { path: 'create', component: CreateEmployeeComponent },
   { path: 'employees/:id', component: EmployeeDetailsComponent },
   { path: '', redirectTo: '/list', pathMatch: 'full' }
@@ -38,7 +44,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     BsDatepickerModule.forRoot(),
   ],
-  providers: [EmployeeService],
+  providers: [EmployeeService, EmployeeListResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

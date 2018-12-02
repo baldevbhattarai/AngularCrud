@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/models/employee.model';
-import { EmployeeService } from './employee.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
@@ -30,31 +29,32 @@ export class ListEmployeesComponent implements OnInit {
     this._searchTerm = value;
     this.filteredEmployees = this.filterEmployees(value);
   }
-  constructor(private _employeeService: EmployeeService, 
-              private _router:Router,
-              private _route: ActivatedRoute) { 
+  constructor(private _router: Router,
+    private _route: ActivatedRoute) {
 
-  }
+    this.employees = this._route.snapshot.data['employeeList'];
 
-  ngOnInit() {
-
-    this.employees = this._employeeService.getEmployees();
-       if (this._route.snapshot.queryParamMap.has('searchTerm')) {
+    if (this._route.snapshot.queryParamMap.has('searchTerm')) {
       this.searchTerm = this._route.snapshot.queryParamMap.get('searchTerm');
     } else {
       this.filteredEmployees = this.employees;
     }
   }
 
- onClick(employeeId:number):void{
 
-  this._router.navigate(['/employees', employeeId], {
-    queryParams: { 'searchTerm': this.searchTerm, 'testParam': 'testValue' }
-  });
- }
+  ngOnInit() {
 
- filterEmployees(searchString: string) {
-  return this.employees.filter(employee =>
-    employee.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
-}
+  }
+
+  onClick(employeeId: number): void {
+
+    this._router.navigate(['/employees', employeeId], {
+      queryParams: { 'searchTerm': this.searchTerm, 'testParam': 'testValue' }
+    });
+  }
+
+  filterEmployees(searchString: string) {
+    return this.employees.filter(employee =>
+      employee.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
+  }
 }
